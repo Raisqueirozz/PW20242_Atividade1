@@ -1,2 +1,2 @@
-# PW20242_Atividade1
+# Rai Queiroz
 Atividade prática avaliativa da disciplina de Programação para a Web
