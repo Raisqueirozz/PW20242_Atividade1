@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% set titulo = "Cadastro de Produto" %}
+{% block conteudo %}
+<h1 class="display-6">{{titulo}}</h1>
+<form action="/post_cadastro" method="post"></form>
+<div class="mb-3 form-floating">
+    <input class="form-control" type="text" name="nome" id="nome" placeholder=" ">
+    <label class="form-label" for="nome">Nome Completo</label>
+</div>
+
+<div class="mb-3 form-floating">
+    <input class="form-control" type="text" name="descricao" id="descricao" placeholder=" ">
+    <label class="form-label" for="descricao">Descrição Produto</label>
+</div>
+
+<div class="mb-3 form-floating">
+    <input class="form-control" type="text" name="estoque" id="estoque" placeholder=" ">
+    <label class="form-label" for="estoque">Estoque Produto</label>
+</div>
+
+<div class="mb-3 form-floating">
+    <input class="form-control" type="number" name="preco" id="preco" placeholder=" ">
+    <label class="form-label" for="preco">Preço</label>
+</div>
+
+<form action="#" method="post">
+    <label for="categoria">Categoria:</label>
+    <select name="categoria" id="categoria" required>
+        <option value="alimentos">Alimentos</option>
+        <option value="limpeza">Limpeza</option>
+        <option value="eletronicos">Eletrônicos</option>
+        <option value="brinquedos">Brinquedos</option>
+        <option value="vestuario">Vestuário</option>
+        <option value="automotivo">Automotivo</option>
+        <option value="esporte_lazer">Esporte & Lazer</option>
+    </select>
+    <br><br>
+    <input type="submit" value="Enviar">
+</form>
+
+
+{% endblock %}
