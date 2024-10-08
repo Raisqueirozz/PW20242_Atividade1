@@ -1,34 +1,38 @@
 from fastapi import FastAPI, Form, Request
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, RedirectResponse
+from util import ler_html, salvar_contato, salvar_cadastro
 import uvicorn
 
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+
+templates = Jinja2Templates(directory='templates')
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get("/home", response_class=HTMLResponse)
-def read_home(request: Request):
-    return templates.TemplateResponse("home.html", {"request": request, "message": "Bem-vindo à Home!"})
+@app.get("/")
+def get_root(request: Request):
+    return templates.TemplateResponse('index.html', {"request": request})
 
-@app.get("/cadastro", response_class=HTMLResponse)
+@app.get("/cadastro")
 def get_cadastro(request: Request):
-    return templates.TemplateResponse("cadastro.html", {"request": request, "titulo": "Cadastro de Produto"})
+    return templates.TemplateResponse('cadastro.html', {"request": request})
 
 @app.post("/post_cadastro")
-def post_cadastro( 
-    nome: str = Form(...), 
+def post_cadastro(
+    request: Request,
+    nome: str = Form(...),
     descricao: str = Form(...),
-    estoque: int = Form(...),  
-    preco: float = Form(...),
-    categoria: str = Form(...)):
-    
-    return RedirectResponse("/", status_code=303)
+    estoque: str = Form(...),
+    preco: str = Form(...),
+    categoria: str = Form(...)):  
+    salvar_cadastro(nome, descricao, estoque, preco, categoria) 
+    return RedirectResponse('/cadastro_recebido', 303)
 
-@app.get("/", response_class=HTMLResponse)
-def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "message": "Bem-vindo à página inicial!"})
+@app.get("/cadastro_recebido")
+def get_cadastro_recebido(request: Request):
+    return templates.TemplateResponse('index.html', {"request": request})
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", port=8000, reload=True)
+ uvicorn.run("main:app", port=8000, reload=True)
