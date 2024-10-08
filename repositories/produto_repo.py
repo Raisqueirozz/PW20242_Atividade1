@@ -1,8 +1,7 @@
 from typing import Optional 
-from util import obter_conexao 
-from sql.produto_sql import * 
 from models.produto_model import Produto 
- 
+from sql.produto_sql import SQL_CRIAR_TABELA, SQL_INSERIR, SQL_OBTER_TODOS 
+from util import obter_conexao 
  
 def criar_tabela(): 
     with obter_conexao() as conexao: 
@@ -25,10 +24,9 @@ def inserir(produto: Produto) -> Optional[Produto]:
             return produto 
         else: 
             return None 
-
-
+     
 def buscar_todos(): 
     with obter_conexao() as conexao: 
         db = conexao.cursor() 
         db.execute(SQL_OBTER_TODOS) 
-        return db.fetchall()
+        return db.fetchall()  
